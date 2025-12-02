@@ -35,4 +35,7 @@ verified := io.jwt.decode_verify(input.token, {
 	"aud": input.audience,
 })
 
-claims := verified[2] if verified[0]
+claims := verified[2] if {
+	print("verified = ", verified)
+	verified[0]	
+}

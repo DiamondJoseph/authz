@@ -16,12 +16,16 @@ write_scopes := {
 
 scopes_for(claims) := read_scopes & write_scopes if {
 	"azp" in object.keys(claims)
+	print("azp", claims.azp)
 	endswith(claims.azp, "-blueapi")
+	print("writable")
 }
 
 scopes_for(claims) := read_scopes if {
 	"azp" in object.keys(claims)
+	print("azp", claims.azp)
 	not endswith(claims.azp, "-blueapi")
+	print("readable")
 }
 
 scopes_for(claims) := read_scopes if {
