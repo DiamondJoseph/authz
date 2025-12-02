@@ -15,5 +15,5 @@ test_wrong_azp_read_scopes if {
 }
 
 test_blueapi_given_write_scopes if {
-	tiled.scopes == tiled.read_scopes & tiled.write_scopes with token.claims as {"azp": "foo-blueapi"}
+	tiled.scopes == tiled.read_scopes | tiled.write_scopes with token.claims as {"azp": "foo-blueapi"}
 }

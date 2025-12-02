@@ -14,7 +14,7 @@ write_scopes := {
 	"register",
 }
 
-scopes_for(claims) := read_scopes & write_scopes if {
+scopes_for(claims) := read_scopes | write_scopes if {
 	"azp" in object.keys(claims)
 	print("azp", claims.azp)
 	endswith(claims.azp, "-blueapi")
