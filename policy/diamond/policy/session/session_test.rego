@@ -215,6 +215,8 @@ test_user_session_tags if {
 		"{\"proposal\": 2, \"visit\": 1, \"beamline\": \"b07\"}",
 	} with data.diamond.data as diamond_data
 		with data.diamond.policy.token.claims as {"fedid": "carol"}
-	session.user_sessions == {"{\"proposal\": 2, \"visit\": 1, \"beamline\": \"b07\"}"} with data.diamond.data as diamond_data
+	session.user_sessions == {
+		"{\"proposal\": 2, \"visit\": 1, \"beamline\": \"b07\"}"
+	} with data.diamond.data as diamond_data
 		with data.diamond.policy.token.claims as {"fedid": "desmond"}
 }
