@@ -58,9 +58,7 @@ write_to_beamline_visit if {
 
 user_sessions contains user_session if {
 	some session in data.diamond.data.sessions
-	print(session)
 	access_session(token.claims.fedid, session.proposal_number, session.visit_number)
-	print(token.claims.fedid, session)
 	user_session := sprintf(
 		"{\"proposal\": %d, \"visit\": %d, \"beamline\": \"%s\"}",
 		[session.proposal_number, session.visit_number, session.beamline],
