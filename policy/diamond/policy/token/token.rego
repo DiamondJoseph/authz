@@ -37,5 +37,5 @@ verified := io.jwt.decode_verify(input.token, {
 
 claims := verified[2] if {
 	print("verified = ", verified)
-	verified[0]	
+	verified[0]
 }
