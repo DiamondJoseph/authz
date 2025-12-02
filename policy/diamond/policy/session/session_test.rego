@@ -25,6 +25,11 @@ diamond_data := {
 			"proposals": [2],
 			"sessions": [13],
 		},
+		"edna": {
+			"permissions": [],
+			"proposals": [2],
+			"sessions": [13, 14],
+		},
 		"oscar": {
 			"permissions": [],
 			"proposals": [],
@@ -47,15 +52,23 @@ diamond_data := {
 			"proposal_number": 2,
 			"visit_number": 1,
 		},
+		"14": {
+			"beamline": "b07",
+			"proposal_number": 2,
+			"visit_number": 2,
+		},
 	},
 	"proposals": {
 		"1": {"sessions": {
 			"1": 11,
 			"2": 12,
 		}},
-		"2": {"sessions": {"1": 13}},
+		"2": {"sessions": {
+			"1": 13,
+			"2": 14,
+		}},
 	},
-	"beamlines": {"i03": {"sessions": [11]}, "b07": {"sessions": [12, 13]}},
+	"beamlines": {"i03": {"sessions": [11]}, "b07": {"sessions": [12, 13, 14]}},
 	"admin": {"b07_admin": ["b07"]},
 }
 
@@ -207,16 +220,24 @@ test_user_session_tags if {
 		"{\"proposal\": 1, \"visit\": 2, \"beamline\": \"b07\"}",
 		"{\"proposal\": 1, \"visit\": 1, \"beamline\": \"i03\"}",
 		"{\"proposal\": 2, \"visit\": 1, \"beamline\": \"b07\"}",
+		"{\"proposal\": 2, \"visit\": 2, \"beamline\": \"b07\"}",
 	} with data.diamond.data as diamond_data
 		with data.diamond.policy.token.claims as {"fedid": "bob"}
 	session.user_sessions == {
 		"{\"proposal\": 1, \"visit\": 2, \"beamline\": \"b07\"}",
 		"{\"proposal\": 1, \"visit\": 1, \"beamline\": \"i03\"}",
 		"{\"proposal\": 2, \"visit\": 1, \"beamline\": \"b07\"}",
+		"{\"proposal\": 2, \"visit\": 2, \"beamline\": \"b07\"}",
 	} with data.diamond.data as diamond_data
 		with data.diamond.policy.token.claims as {"fedid": "carol"}
 	session.user_sessions == {
-		"{\"proposal\": 2, \"visit\": 1, \"beamline\": \"b07\"}"
+		"{\"proposal\": 2, \"visit\": 1, \"beamline\": \"b07\"}",
+		"{\"proposal\": 2, \"visit\": 2, \"beamline\": \"b07\"}",
 	} with data.diamond.data as diamond_data
 		with data.diamond.policy.token.claims as {"fedid": "desmond"}
+	session.user_sessions == {
+		"{\"proposal\": 2, \"visit\": 1, \"beamline\": \"b07\"}",
+		"{\"proposal\": 2, \"visit\": 2, \"beamline\": \"b07\"}",
+	} with data.diamond.data as diamond_data
+		with data.diamond.policy.token.claims as {"fedid": "edna"}
 }
