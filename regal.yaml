@@ -9,3 +9,8 @@ rules:
       except-paths:
         - data.diamond.data
         - data.diamond.data.*
+
+  testing:
+    print-or-trace-call:
+      # one of "error", "warning", "ignore"
+      level: ignore
