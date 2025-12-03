@@ -24,7 +24,7 @@ on_session(subject, proposal_number, visit_number) if {
 default access_session(_, _, _) := false
 
 # Allow if subject has super_admin permission
-access_session(subject, proposal_number, visit_number) if admin.is_admin[subject] # regal ignore:external-reference
+access_session(subject, proposal_number, visit_number) if admin.is_admin(subject) # regal ignore:external-reference
 
 # Allow if subject is admin for beamline containing session
 access_session(subject, proposal_number, visit_number) if {
@@ -54,4 +54,13 @@ default write_to_beamline_visit := false
 write_to_beamline_visit if {
 	access
 	matches_beamline
+}
+
+user_sessions contains user_session if {
+	some session in data.diamond.data.sessions
+	access_session(token.claims.fedid, session.proposal_number, session.visit_number)
+	user_session := sprintf(
+		`{"proposal": %d, "visit": %d, "beamline": "%s"}`,
+		[session.proposal_number, session.visit_number, session.beamline],
+	)
 }
